@@ -8,6 +8,10 @@ import java.util.Objects;
 @Data
 @Entity
 @Table(name = "users")
+@NamedQueries({
+        @NamedQuery(name = "Users.FindAll", query = "SELECT u from Users u order by lastName"),
+        @NamedQuery(name = "Users.Count", query = "select count(*) from Users")
+})
 public class Users {
 
     @Id
