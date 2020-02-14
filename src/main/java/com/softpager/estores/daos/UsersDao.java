@@ -7,9 +7,7 @@ import java.util.List;
 
 public class UsersDao extends JpaDao<Users> implements GenericDAO<Users> {
 
-    public UsersDao(EntityManager entityManager) {
-        super(entityManager);
-    }
+    public UsersDao() {}
 
     @Override
     public Users create(Users theUser){
@@ -22,8 +20,8 @@ public class UsersDao extends JpaDao<Users> implements GenericDAO<Users> {
     }
 
     @Override
-    public Users get(Object id) {
-        Users theUser = super.get(Users.class, id);
+    public Users find(Object id) {
+        Users theUser = super.find(Users.class, id);
         return theUser;
     }
 
@@ -33,8 +31,9 @@ public class UsersDao extends JpaDao<Users> implements GenericDAO<Users> {
     }
 
     @Override
-    public List<Users> getAll() {
-        return super.findAllByNamedQuery("Users.FindAll");
+    public List<Users> findAll() {
+        return super.findByNamedQuery(
+                "Users.FindAll");
     }
 
     @Override
@@ -42,7 +41,13 @@ public class UsersDao extends JpaDao<Users> implements GenericDAO<Users> {
         super.delete(Users.class, id);
     }
 
-    public Users findByEmail(String email){
-        return super.findByEmailNamedQuery(email);
+    public boolean findByEmail(String email){
+      var foundUser = super.findByNamedQuery("Users.findByEmail",
+                            "email",email);
+      if (foundUser != null){
+          return true;
+      }
+      return false;
     }
+
 }

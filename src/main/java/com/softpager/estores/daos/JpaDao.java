@@ -1,16 +1,22 @@
 package main.java.com.softpager.estores.daos;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.util.List;
 
 public class JpaDao<E> {
-    protected EntityManager entityManager;
-    public JpaDao(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    private static EntityManagerFactory emf;
+
+    static {
+        emf = Persistence.createEntityManagerFactory("EStores");
     }
 
+    public JpaDao() {}
+
     public E create(E entity){
+        EntityManager entityManager = emf.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(entity);
         entityManager.flush();
@@ -20,13 +26,15 @@ public class JpaDao<E> {
     }
 
     public E update(E entity){
+        EntityManager entityManager = emf.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.merge(entity);
         entityManager.getTransaction().commit();
         return entity;
     }
 
-    public E get(Class<E> type, Object id){
+    public E find(Class<E> type, Object id){
+     EntityManager entityManager = emf.createEntityManager();
      var entity =  entityManager.find(type, id);
      if (entity != null){
          entityManager.refresh(entity);
@@ -35,6 +43,7 @@ public class JpaDao<E> {
     }
 
     public void delete(Class<E> type, Object id){
+        EntityManager entityManager = emf.createEntityManager();
         entityManager.getTransaction().begin();
         var reference = entityManager.getReference(type, id);
         if (reference !=null){
@@ -43,22 +52,24 @@ public class JpaDao<E> {
         }
     }
 
-    public long count(){
-        return 0;
+    public List<E> findByNamedQuery(String queryName){
+        EntityManager entityManager = emf.createEntityManager();
+        Query query = entityManager.createNamedQuery(queryName);
+        return query.getResultList();
     }
 
-    public List<E> findAllByNamedQuery(String queryName){
-        Query query = entityManager.createNamedQuery("Users.FindAll");
+    public List<E> findByNamedQuery(String queryName, String paramName,
+                                    Object paramValue){
+        EntityManager entityManager = emf.createEntityManager();
+        Query query = entityManager.createNamedQuery(queryName);
+        query.setParameter(paramName, paramValue);
         return query.getResultList();
     }
 
     public long countWithNamedQuery(String queryName){
+        EntityManager entityManager = emf.createEntityManager();
         var query = entityManager.createNamedQuery(queryName);
         return (long) query.getSingleResult();
-    }
-    public E findByEmailNamedQuery(String queryName){
-        Query query = entityManager.createNamedQuery("Users.findByEmail");
-        return (E) query.getSingleResult();
     }
 
 }

@@ -6,8 +6,8 @@ public interface GenericDAO<T> {
 
     T create(T t);
     T update(T t);
-    T get(Object id);
+    T find(Object id);
     long count();
-    List<T> getAll();
+    List<T> findAll();
     void delete(Object id);
 }

@@ -1,66 +1,47 @@
 package main.java.com.softpager.estores.services;
 
+
 import main.java.com.softpager.estores.daos.UsersDao;
 import main.java.com.softpager.estores.entities.Users;
-import main.java.com.softpager.estores.utils.Views;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.List;
 
 public class UserService {
-    private EntityManagerFactory emf;
-    private EntityManager em;
     private UsersDao usersDao;
+    private HttpServletRequest request;
+    private HttpServletResponse response;
 
-    public UserService() {
-        emf = Persistence.createEntityManagerFactory("EStores");
-        em = emf.createEntityManager();
-        usersDao = new UsersDao(em);
+    public UserService(HttpServletRequest request, HttpServletResponse response) {
+        this.request = request;
+        this.response = response;
+        this.usersDao = new UsersDao();
     }
 
+    public void create() throws ServletException, IOException {
+        String firstName = request.getParameter("firstName").trim();
+        String lastName = request.getParameter("lastName").trim();
+        String email = request.getParameter("email").trim();
+        String password = request.getParameter("password").trim();
 
-    public void getAll(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        getAll(request, response, null);
-    }
-
-    public void getAll(HttpServletRequest request,
-                       HttpServletResponse response, String message)
-            throws ServletException, IOException {
-
-        List<Users> allUsers = usersDao.getAll();
-        request.setAttribute("users", allUsers);
-        if (message != null) {
+        boolean userAlreadyExists = usersDao.findByEmail(email);
+        if (userAlreadyExists) {
+            String message = "A user with email " + email + " already exists";
             request.setAttribute("message", message);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("message.html");
+            dispatcher.forward(request, response);
+
+        } else {
+          var   newUser = new Users(firstName, lastName, email, password);
+            usersDao.create(newUser);
         }
-
-        String requestedPage = Views.USERS_LIST;
-        RequestDispatcher dispatcher =request.getRequestDispatcher(requestedPage);
-        dispatcher.forward(request, response);
     }
 
-
-    public Users create(HttpServletRequest request,
-                        HttpServletResponse response)
-            throws ServletException, IOException{
-
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-
-        var theUser = new Users(firstName,lastName, email,password);
-        return usersDao.create(theUser);
+    public List<Users> findAll(){
+        return usersDao.findAll();
     }
-
-
 }

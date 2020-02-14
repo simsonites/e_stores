@@ -1,6 +1,5 @@
 package main.java.com.softpager.estores.servlets.admin;
 
-import main.java.com.softpager.estores.services.UserService;
 import main.java.com.softpager.estores.utils.UrlMapping;
 
 import javax.servlet.ServletException;
@@ -10,13 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "ListUserServlet", urlPatterns = UrlMapping.LIST_USERS)
-public class ListUserServlet extends HttpServlet {
+@WebServlet(name = "EditUserServlet", urlPatterns = UrlMapping.EDIT_USER)
+public class EditUserServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response) throws ServletException, IOException {
+
+    }
 
     protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
-            throws ServletException, IOException {
-        UserService userService = new UserService(request, response);
-        userService.findAll();
+                         HttpServletResponse response) throws ServletException, IOException {
+
     }
 }
