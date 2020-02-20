@@ -10,13 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "EditUserServlet", urlPatterns = UrlMapping.EDIT_USER)
-public class EditUserServlet extends HttpServlet {
-
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) throws ServletException, IOException {
+@WebServlet(name = "UpdateUserServlet",
+              urlPatterns = UrlMapping.UPDATE_USER)
+public class UpdateUserServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
+            throws ServletException, IOException {
         var userService = new UserService(request, response);
-        userService.editUser();
-
+        userService.updateUser();
     }
+
 }

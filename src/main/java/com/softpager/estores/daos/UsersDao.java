@@ -41,13 +41,13 @@ public class UsersDao extends JpaDao<Users> implements GenericDAO<Users> {
         super.delete(Users.class, id);
     }
 
-    public boolean findByEmail(String email){
-      var foundUser = super.findByNamedQuery("Users.findByEmail",
-                            "email",email);
+    public Users findByEmail(String email){
+      var foundUser = super.findByNamedQuery(
+              "Users.findByEmail","email",email);
       if (foundUser != null){
-          return true;
+          return foundUser.get(0);
       }
-      return false;
+      return null;
     }
 
 }

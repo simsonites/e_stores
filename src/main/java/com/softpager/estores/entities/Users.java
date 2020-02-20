@@ -35,14 +35,19 @@ public class Users{
     @Column(name = "password", nullable = false)
     private String password;
 
+    public Users() {}
+
+    public Users(int userId, String firstName, String lastName, String email, String password) {
+        this(firstName, lastName, email, password);
+        this.userId = userId;
+    }
+
     public Users(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
     }
-
-    public Users() {}
 
     @Override
     public boolean equals(Object o) {
@@ -52,6 +57,7 @@ public class Users{
         return getUserId() == users.getUserId() &&
                 getEmail().equals(users.getEmail());
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(getUserId(), getEmail());
