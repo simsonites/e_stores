@@ -73,7 +73,6 @@ public class UserService {
         rd.forward(request, response);
     }
 
-
     public void updateUser() throws ServletException, IOException {
         int userId = Integer.parseInt(request.getParameter("userId"));
         String firstName = request.getParameter("firstName").trim();
@@ -98,5 +97,12 @@ public class UserService {
             String message = "user " + FeedBack.UPDATE_SUCCESS;
             findAll(message);
         }
+    }
+    public void delete(int id) {
+      usersDao.delete(id);
+    }
+
+    public Users findUser(int id){
+        return usersDao.find(id);
     }
 }
