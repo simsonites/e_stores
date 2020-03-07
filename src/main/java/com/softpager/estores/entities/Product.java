@@ -3,52 +3,35 @@ package main.java.com.softpager.estores.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Data
 @Entity
 @Table(name = "product")
-public class Product {
-    private int productId;
-    private String name;
-    private String description;
-    private byte[] image;
-    private double price;
-    private Category category;
-
+public class Product implements Serializable {
 
     @Id
     @GeneratedValue
     @Column(name = "product_id", nullable = false)
-    public int getProductId() {
-        return productId;
-    }
+    private int productId;
 
-    @Column(name = "name", nullable = false, length = 128)
-    public String getName() {
-        return name;
-    }
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    @Column(name = "description", nullable = false, length = -1)
-    public String getDescription() {
-        return description;
-    }
+    @Column(name = "description", nullable = false)
+    private String description;
 
     @Column(name = "image", nullable = false)
-    public byte[] getImage() {
-        return image;
-    }
+    private byte[] image;
 
-    @Column(name = "price", nullable = false, precision = 0)
-    public double getPrice() {
-        return price;
-    }
+    @Column(name = "price", nullable = false)
+    private double price;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "category_id", nullable = false)
-    public Category getCategory() {
-        return category;
-    }
+    @JoinColumn(name = "category_id")
+    private Category category;
+
 
     @Override
     public boolean equals(Object o) {

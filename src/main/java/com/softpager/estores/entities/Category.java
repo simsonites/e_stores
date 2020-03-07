@@ -4,12 +4,18 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Data
 @Entity
 @Table(name = "category")
-public class Category {
+@NamedQueries({
+     @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
+     @NamedQuery(name = "Category.findByName", query = "SELECT c FROM Category c WHERE c.name = :name"),
+     @NamedQuery(name = "Category.count", query = "SELECT COUNT(*) FROM Category ")
 
+})
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id", nullable = false)
@@ -18,10 +24,18 @@ public class Category {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
+    private Set<Product> products;
+
+    public Category() { }
+
     public Category(String name) {
         this.name =name;
     }
-    public Category() { }
+    public Category(int categoryId, String name) {
+        this.categoryId = categoryId;
+        this.name = name;
+    }
 
     @Override
     public boolean equals(Object o) {

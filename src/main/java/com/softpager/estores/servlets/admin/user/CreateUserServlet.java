@@ -1,10 +1,8 @@
 package main.java.com.softpager.estores.servlets.admin.user;
 
-import main.java.com.softpager.estores.entities.Users;
 import main.java.com.softpager.estores.services.UserService;
-import main.java.com.softpager.estores.utils.UrlMapping;
+import main.java.com.softpager.estores.utils.UrlMapper;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "CreateUserServlet", urlPatterns = UrlMapping.CREATE_USER)
+@WebServlet(name = "CreateUserServlet", urlPatterns = UrlMapper.CREATE_USER)
 public class CreateUserServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request,

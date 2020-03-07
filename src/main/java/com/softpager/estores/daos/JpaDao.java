@@ -8,7 +8,7 @@ import java.util.List;
 
 public class JpaDao<E> {
     private static EntityManagerFactory emf;
-
+    
     static {
         emf = Persistence.createEntityManagerFactory("EStores");
     }
@@ -33,13 +33,13 @@ public class JpaDao<E> {
         return entity;
     }
 
-    public E find(Class<E> type, Object id){
+    public E findById(Class<E> type, Object id){
      EntityManager entityManager = emf.createEntityManager();
      var entity =  entityManager.find(type, id);
      if (entity != null){
          entityManager.refresh(entity);
      }
-        return entity;
+     return entity;
     }
 
     public void delete(Class<E> type, Object id){

@@ -1,7 +1,7 @@
 package main.java.com.softpager.estores.servlets.admin.user;
 
 import main.java.com.softpager.estores.services.UserService;
-import main.java.com.softpager.estores.utils.UrlMapping;
+import main.java.com.softpager.estores.utils.UrlMapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "UpdateUserServlet",
-              urlPatterns = UrlMapping.UPDATE_USER)
+              urlPatterns = UrlMapper.UPDATE_USER)
 public class UpdateUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)

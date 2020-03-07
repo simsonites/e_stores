@@ -1,6 +1,6 @@
-package main.java.com.softpager.estores.servlets.admin.user;
+package main.java.com.softpager.estores.servlets.admin.category;
 
-import main.java.com.softpager.estores.services.UserService;
+import main.java.com.softpager.estores.services.CategoryService;
 import main.java.com.softpager.estores.utils.UrlMapper;
 
 import javax.servlet.ServletException;
@@ -10,13 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "EditUserServlet", urlPatterns = UrlMapper.EDIT_USER)
-public class EditUserServlet extends HttpServlet {
+@WebServlet(name = "EditCategoryServlet",
+             urlPatterns = UrlMapper.EDIT_CATEGORY)
+public class EditCategoryServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
-        var userService = new UserService(request, response);
-        userService.editUser();
+        var categoryService = new CategoryService(request,response);
+        categoryService.editCategory();
 
     }
 }

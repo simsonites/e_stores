@@ -16,7 +16,7 @@ import java.util.Objects;
         @NamedQuery(name = "Users.Count", query = "select count(*) from Users"),
         @NamedQuery(name = "Users.findByEmail", query = "select u from Users u where u.email= :email")
 })
-@Setter(AccessLevel.NONE)
+//@Setter(AccessLevel.NONE)
 public class Users{
     @Id
     @GeneratedValue

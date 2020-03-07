@@ -2,12 +2,12 @@ package main.java.com.softpager.estores.daos;
 
 import java.util.List;
 
-public interface GenericDAO<T> {
+public interface GenericDAO<E> {
 
-    T create(T t);
-    T update(T t);
-    T find(Object id);
+    E create(E e);
+    E update(E e);
+    E findById(Object id);
     long count();
-    List<T> findAll();
+    List<E> findAll();
     void delete(Object id);
 }

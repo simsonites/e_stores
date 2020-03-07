@@ -2,7 +2,6 @@ package main.java.com.softpager.estores.daos;
 
 import main.java.com.softpager.estores.entities.Users;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 public class UsersDao extends JpaDao<Users> implements GenericDAO<Users> {
@@ -20,8 +19,8 @@ public class UsersDao extends JpaDao<Users> implements GenericDAO<Users> {
     }
 
     @Override
-    public Users find(Object id) {
-        Users theUser = super.find(Users.class, id);
+    public Users findById(Object id) {
+        Users theUser = super.findById(Users.class, id);
         return theUser;
     }
 

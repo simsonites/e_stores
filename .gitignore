@@ -1,3 +1,6 @@
 /src/hibernate.cfg.xml
 /src/main/resources/META-INF/persistence.xml
 /.idea/
+/e_stores.iml
+/META-INF/
+/bin/

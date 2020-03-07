@@ -1,7 +1,8 @@
-package main.java.com.softpager.estores.servlets.admin.user;
+package main.java.com.softpager.estores.servlets;
 
-import main.java.com.softpager.estores.services.UserService;
+import main.java.com.softpager.estores.utils.ServletDispatcher;
 import main.java.com.softpager.estores.utils.UrlMapper;
+import main.java.com.softpager.estores.utils.ViewMapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,13 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "DeleteUserServlet",
-        urlPatterns = UrlMapper.DELETE_USER)
-public class DeleteUserServlet extends HttpServlet {
+
+@WebServlet(name = "HomeServlet", urlPatterns= UrlMapper.HOME)
+public class HomeServlet extends HttpServlet {
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        var userService  = new UserService(request, response);
-        userService.delete();
-
+        ServletDispatcher sd = new ServletDispatcher();
+        sd.process(ViewMapper.HOME_PAGE,request,response);
     }
 }
