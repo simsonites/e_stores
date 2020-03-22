@@ -2,9 +2,12 @@ package main.java.com.softpager.estores.daos;
 
 import main.java.com.softpager.estores.entities.Users;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UsersDao extends JpaDao<Users> implements GenericDAO<Users> {
+
 
     public UsersDao() {}
 
@@ -31,7 +34,7 @@ public class UsersDao extends JpaDao<Users> implements GenericDAO<Users> {
 
     @Override
     public List<Users> findAll() {
-        return super.findByNamedQuery(
+        return super.findWithNamedQuery(
                 "Users.FindAll");
     }
 
@@ -41,12 +44,24 @@ public class UsersDao extends JpaDao<Users> implements GenericDAO<Users> {
     }
 
     public Users findByEmail(String email){
-      var foundUser = super.findByNamedQuery(
+      var foundUser = super.findWithNamedQuery(
               "Users.findByEmail","email",email);
       if (foundUser != null){
           return foundUser.get(0);
       }
       return null;
+    }
+
+    public boolean checkLogin(String email, String password){
+        Map<String, Object> loginInfo = new HashMap<>();
+        loginInfo.put("email", email);
+        loginInfo.put("password", password);
+        List<Users> listUsers = super.findWithNamedQuery("Users.checkLogin", loginInfo);
+
+        if (listUsers.size() == 1) {
+            return true;
+        }
+        return false;
     }
 
 }

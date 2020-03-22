@@ -5,6 +5,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class JpaDao<E> {
     private static EntityManagerFactory emf;
@@ -52,24 +54,41 @@ public class JpaDao<E> {
         }
     }
 
-    public List<E> findByNamedQuery(String queryName){
+    public List<E> findWithNamedQuery(String queryName){
         EntityManager entityManager = emf.createEntityManager();
         Query query = entityManager.createNamedQuery(queryName);
         return query.getResultList();
     }
 
-    public List<E> findByNamedQuery(String queryName, String paramName,
-                                    Object paramValue){
+    public List<E> findWithNamedQuery(String queryName, String paramName,
+                                      Object paramValue){
         EntityManager entityManager = emf.createEntityManager();
         Query query = entityManager.createNamedQuery(queryName);
         query.setParameter(paramName, paramValue);
-        return query.getResultList();
+        List<E> resultList = query.getResultList();
+        entityManager.close();
+        return resultList;
     }
 
     public long countWithNamedQuery(String queryName){
         EntityManager entityManager = emf.createEntityManager();
         var query = entityManager.createNamedQuery(queryName);
-        return (long) query.getSingleResult();
+        long singleResult = (long) query.getSingleResult();
+        entityManager.close();
+        return singleResult;
+    }
+
+    public List<E> findWithNamedQuery(String queryName,
+                                      Map<String, Object> userInfo) {
+        EntityManager entityManager = emf.createEntityManager();
+        Query query = entityManager.createNamedQuery(queryName);
+        Set<Map.Entry<String, Object>> setParameters = userInfo.entrySet();
+        for (Map.Entry<String, Object> entry : setParameters) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+        List<E> result = query.getResultList();
+        entityManager.close();
+        return result;
     }
 
 }

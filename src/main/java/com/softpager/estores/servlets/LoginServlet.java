@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-@WebServlet(UrlMapper.HOME)
-public class HomeServlet extends HttpServlet {
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+@WebServlet(UrlMapper.LOGIN)
+public class LoginServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response)
             throws ServletException, IOException {
-        PageDispatcher.forwardToPage(ViewMapper.HOME_PAGE,request,response);
+        request.setAttribute("log", "Yea, Login");
+        PageDispatcher.forwardToPage(ViewMapper.LOGIN_FORM, request,response);
 
     }
 }

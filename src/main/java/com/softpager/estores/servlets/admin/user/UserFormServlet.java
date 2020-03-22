@@ -1,4 +1,4 @@
-package main.java.com.softpager.estores.servlets;
+package main.java.com.softpager.estores.servlets.admin.user;
 
 import main.java.com.softpager.estores.utils.PageDispatcher;
 import main.java.com.softpager.estores.utils.UrlMapper;
@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-@WebServlet(UrlMapper.HOME)
-public class HomeServlet extends HttpServlet {
+@WebServlet(UrlMapper.USER_FORM)
+public class UserFormServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PageDispatcher.forwardToPage(ViewMapper.HOME_PAGE,request,response);
+        request.setAttribute("message", "Yea, we are here");
+        PageDispatcher.forwardToPage(ViewMapper.USER_FORM, request, response);
 
     }
 }

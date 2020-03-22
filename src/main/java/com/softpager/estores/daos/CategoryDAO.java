@@ -14,7 +14,7 @@ public class CategoryDAO extends JpaDao<Category>implements GenericDAO<Category>
 
     @Override
     public List<Category> findAll() {
-        return super.findByNamedQuery("Category.findAll");
+        return super.findWithNamedQuery("Category.findAll");
     }
 
     @Override
@@ -38,7 +38,7 @@ public class CategoryDAO extends JpaDao<Category>implements GenericDAO<Category>
     }
 
   public Category findByName(String categoryName){
-        var category =super.findByNamedQuery(
+        var category =super.findWithNamedQuery(
                 "Category.findByName","name",categoryName);
         if (category != null && category.size()>0){
             return category.get(0);
